@@ -8,27 +8,27 @@
  * @param {number} k
  */
 var MyCircularQueue = function(k) {
-    this.k = k;
-    this.data = [];
-    this.head = -1;
-    this.tail = -1;
+  this.size = k;
+  this.data = [];
+  this.head = -1;
+  this.tail = -1;
 };
 
 /**
- * Insert an element into the circular queue. Return true if the operation is successful. 
+ * Insert an element into the circular queue. Return true if the operation is successful.
  * @param {number} value
  * @return {boolean}
  */
 MyCircularQueue.prototype.enQueue = function(value) {
-    if (this.isFull()) {
-        return false;
-    }
-    if (this.isEmpty()) {
-        this.head = 0;
-    }
-    this.tail = (this.tail + 1) % this.k;
-    this.data[this.tail] = value;
-    return true;
+  if (this.isFull()) {
+    return false;
+  }
+  if (this.isEmpty()) {
+    this.head = 0;
+  }
+  this.tail = (this.tail + 1) % this.size;
+  this.data[this.tail] = value;
+  return true;
 };
 
 /**
@@ -36,17 +36,18 @@ MyCircularQueue.prototype.enQueue = function(value) {
  * @return {boolean}
  */
 MyCircularQueue.prototype.deQueue = function() {
-    if (this.isEmpty()) {
-        return false;
-    }
-    this.data[this.head] = null;
-    if (this.head === this.tail) {
-        this.head = -1;
-        this.tail = -1;
-        return true;
-    }
-    this.head = (this.head + 1) % this.k;
+  if (this.isEmpty()) {
+    return false;
+  }
+  this.data[this.head] = null;
+  if (this.head === this.tail) {
+    this.head = -1;
+    this.tail = -1;
     return true;
+  } else {
+    this.head = (this.head + 1) % this.size;
+    return true;
+  }
 };
 
 /**
@@ -54,10 +55,10 @@ MyCircularQueue.prototype.deQueue = function() {
  * @return {number}
  */
 MyCircularQueue.prototype.Front = function() {
-    if (this.isEmpty()) {
-        return -1;
-    }
-    return this.data[this.head];
+  if (this.isEmpty()) {
+    return -1;
+  }
+  return this.data[this.head];
 };
 
 /**
@@ -65,10 +66,10 @@ MyCircularQueue.prototype.Front = function() {
  * @return {number}
  */
 MyCircularQueue.prototype.Rear = function() {
-    if (this.isEmpty()) {
-        return -1;
-    }
-    return this.data[this.tail];
+  if (this.isEmpty()) {
+    return -1;
+  }
+  return this.data[this.tail];
 };
 
 /**
@@ -76,7 +77,7 @@ MyCircularQueue.prototype.Rear = function() {
  * @return {boolean}
  */
 MyCircularQueue.prototype.isEmpty = function() {
-    return this.head === -1;
+  return this.head === -1;
 };
 
 /**
@@ -84,10 +85,10 @@ MyCircularQueue.prototype.isEmpty = function() {
  * @return {boolean}
  */
 MyCircularQueue.prototype.isFull = function() {
-    return ((this.tail + 1) % this.k) === this.head;
+  return (this.tail + 1) % this.size === this.head;
 };
 
-/** 
+/**
  * Your MyCircularQueue object will be instantiated and called as such:
  * var obj = new MyCircularQueue(k)
  * var param_1 = obj.enQueue(value)
@@ -97,4 +98,3 @@ MyCircularQueue.prototype.isFull = function() {
  * var param_5 = obj.isEmpty()
  * var param_6 = obj.isFull()
  */
-
